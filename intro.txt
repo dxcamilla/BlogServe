@@ -1,0 +1,30 @@
+下周
+1、把请求做好，状态管理，admin已经改完
+2、token放在请求头里，验证，用户信息放到store.state里
+
+
+QAQ:
+1、在axios拦截器里设置请求头，不是所有的请求都发送了token，都要进行token验证了吗？
+//2、demo里的testAuth并没有引入middlewares的auth啊，为啥就走到了那呢？
+//3、res.$user的$user自己生成哒？
+
+使用vue：
+去除后台对userInfo的处理
+
+
+注册：
+
+登录：
+
+1. 前端js获取用户名密码
+2. 后台api返回信息：resultCode、resultMsg/转化为json()对象
+	2.1 非空判断
+	2.2 用户名 用户密码查询
+3.设置cookie保存登陆状态。需要在package.json中下载cookies模块，在app.js中require进来
+	在登录成功处理的时候设置cookie信息。
+	req.cookies.set("userInfo",JSON.stringify({
+		_id:userInfo._id,
+		username:userInfo.username
+	}));
+
+	

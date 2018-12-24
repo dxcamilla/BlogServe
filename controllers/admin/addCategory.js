@@ -1,0 +1,35 @@
+const Category = require('../../models/Category')
+const status = require('../statusCode')
+resData = {
+  resCode: status.success,
+  resMsg: ""
+}
+module.exports = async (req, res, next) => {
+  var { cateName } = req.query;
+  Category.findOne({
+    category: { '$regex': cateName, '$options': 'i' }
+  }).then(function (isExist) {
+    if (isExist) {
+      resData = {
+        resCode: status.exist,
+        resMsg: "该分类已存在"
+      }
+      return res.json(resData)
+    }
+    var category = new Category({
+      category: cateName
+    })
+    resData = {
+      resCode: status.success,
+      resMsg: "添加成功"
+    }
+    category.save();
+  }).catch(function (err) {
+    resData = {
+      resCode: status.fail,
+      resMsg: "保存失败"
+    }
+    console.log('catched:', err);
+  })
+  return res.json(resData)
+}

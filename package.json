@@ -1,0 +1,28 @@
+{
+  "name": "dxblog",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "art-template": "^4.13.0",
+    "body-parser": "~1.16.0",
+    "cookie-parser": "~1.4.3",
+    "cookies": "^0.7.1",
+    "cors": "^2.8.5",
+    "debug": "~2.6.0",
+    "ejs": "~2.5.5",
+    "express": "~4.14.1",
+    "express-art-template": "^1.0.1",
+    "jsonwebtoken": "^8.4.0",
+    "mongoose": "^5.2.16",
+    "morgan": "~1.7.0",
+    "nodemailer": "^4.6.7",
+    "package.json": "^2.0.1",
+    "serve-favicon": "~2.3.2"
+  },
+  "devDependencies": {
+    "mongodb": "^3.1.1"
+  }
+}
