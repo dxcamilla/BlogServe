@@ -81,9 +81,9 @@ router.get('/user/verUserInfo', function (req, res, next) {
       return
     }
     console.log(decoded)
-    res.render('test.art', {
-      data: decoded
-    })
+    // res.render('test.art', {
+    //   data: decoded
+    // })
     return;
   })
 })

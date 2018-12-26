@@ -26,8 +26,11 @@ router.post("/user/registerNext", controllers.login.rgstSecond);
 /*
 * 登录
 */
-router.post("/user/login", controllers.login.index)
-
+router.post("/user/login", controllers.login.login)
+/*
+* token换取用户信息
+*/
+router.post("/user/tokenLogin", controllers.login.tokenLogin)
 /*
 * 登出
 */

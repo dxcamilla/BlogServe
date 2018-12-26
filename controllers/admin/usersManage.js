@@ -1,15 +1,15 @@
 const User = require('../../models/User')
 const status = require('../statusCode')
 resData = {
-  resCode: status.success,
+  resCode: status.fail,
   resMsg: ""
 }
 module.exports = async (req, res, next) => {
-  var page = Number(req.query.page || 1),//当前页数
+  let page = Number(req.query.page || 1),//当前页数
     limit = 2,//每页展示条数
     skip = (page - 1) * limit;//去除的条数
   User.find().count().then(count => {
-    var pages = Math.ceil(count / limit);
+    let pages = Math.ceil(count / limit);
     page = Math.min(page, pages);
     page = Math.max(page, 1);
     User.find().limit(limit).skip(skip).then(users => {

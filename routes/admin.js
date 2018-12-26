@@ -37,7 +37,7 @@ router.get('/delCategory', controllers.admin.delCategory)
  * 内容管理页面
  *  */
 // 内容管理页面
-router.get('/contentsManage', controllers.admin.addContent)
+router.get('/contentsManage', controllers.admin.contentsManage)
 // 跳转至新增、修改内容
 router.get('/toAddContent', controllers.admin.toAddContent)
 //添加内容

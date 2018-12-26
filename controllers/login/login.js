@@ -2,17 +2,12 @@ const jwt = require('jsonwebtoken')
 const jwtConf = require('../../config')
 const User = require('../../models/User')
 const status = require('../statusCode')
-resData = {
-  resCode: status.success,
-  resMsg: ""
-}
 module.exports = (req, res) => {
   let { userAccount, pwd } = req.body;
   User.findOne({
     userAccount: userAccount,
     password: pwd
   }).then(userInfo => {
-    console.log(userInfo)
     if (userInfo) {
       const userpayload = {
         _id: userInfo._id,
@@ -28,6 +23,7 @@ module.exports = (req, res) => {
         userInfo: userpayload,
         userToken: token
       }
+      console.log(resData)
     } else {
       resData = {
         resCode: status.error,

@@ -1,10 +1,6 @@
 const Category = require('../../models/Category')
 const status = require('../statusCode')
-resData = {
-  resCode: status.success,
-  resMsg: ""
-}
-module.exports = async (req, res, next) => {
+module.exports = (req, res, next) => {
   var { cateName } = req.query;
   Category.findOne({
     category: { '$regex': cateName, '$options': 'i' }

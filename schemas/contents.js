@@ -19,14 +19,14 @@ module.exports = new mongoose.Schema({
         type: String,
         default: ''
     },
-    createTime: String,
+    createTime: Number,
     publishTime: {
-        type: String,
-        default: ''
+        type: Number,
+        default: 0
     },
     status: {
-        type: String,
-        default: '未发布'
+        type: Number,
+        default: 0 //0:未发布 1：已下架
     },
     stick: {
         type: Boolean,
