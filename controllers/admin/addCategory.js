@@ -2,6 +2,9 @@ const Category = require('../../models/Category')
 const status = require('../statusCode')
 module.exports = (req, res, next) => {
   var { cateName } = req.query;
+  console.log(req.query)
+  console.log(cateName)
+  console.log(typeof cateName)
   Category.findOne({
     category: { '$regex': cateName, '$options': 'i' }
   }).then(function (isExist) {

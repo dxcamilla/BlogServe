@@ -19,10 +19,10 @@ module.exports = new mongoose.Schema({
         type: String,
         default: ''
     },
-    createTime: Number,
+    createTime: String,
     publishTime: {
-        type: Number,
-        default: 0
+        type: String,
+        default: ''
     },
     status: {
         type: Number,

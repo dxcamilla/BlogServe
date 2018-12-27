@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
   let page = Number(req.query.page || 1),
     limit = 10,
     skip = (page - 1) * limit;
-  Content.find().count()
+  Content.find().countDocuments()
     .then(count => {
       let pages = Math.ceil(count / limit);
       page = Math.min(page, pages);

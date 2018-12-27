@@ -5,9 +5,9 @@ resData = {
   resMsg: ""
 }
 module.exports = (req, res, next) => {
-  var { contId } = req.query;
-  Content.remove({
-    _id: contId
+  var { contIds } = req.query;
+  Content.deleteMany({
+    _id: contIds
   }).then(data => {
     resData = {
       resCode: status.success,

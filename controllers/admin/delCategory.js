@@ -4,10 +4,10 @@ resData = {
   resCode: status.success,
   resMsg: ""
 }
-module.exports = async (req, res, next) => {
-  var cateId = req.query.cateId;
-  Category.remove({
-    _id: cateId
+module.exports = (req, res, next) => {
+  var { cateIds } = req.query;
+  Category.deleteMany({
+    _id: cateIds
   }).then(data => {
     resData = {
       resCode: status.success,

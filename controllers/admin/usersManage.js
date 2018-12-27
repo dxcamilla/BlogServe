@@ -8,7 +8,7 @@ module.exports = async (req, res, next) => {
   let page = Number(req.query.page || 1),//当前页数
     limit = 2,//每页展示条数
     skip = (page - 1) * limit;//去除的条数
-  User.find().count().then(count => {
+  User.find().countDocuments().then(count => {
     let pages = Math.ceil(count / limit);
     page = Math.min(page, pages);
     page = Math.max(page, 1);

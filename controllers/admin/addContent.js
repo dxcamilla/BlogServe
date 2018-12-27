@@ -1,4 +1,5 @@
 const Content = require('../../models/Content')
+const Tag = require('../../models/Tag')
 const status = require('../statusCode')
 resData = {
   resCode: status.success,
@@ -20,8 +21,27 @@ Date.prototype.Format = function (fmt) { //author: meizz
   return fmt
 }
 module.exports = (req, res) => {
-  let { contType, contTitle, contSummary, contBody } = req.query,
+  let { contType, contTitle, contSummary, contBody, tags } = req.query,
     dateTime = (new Date()).Format('yyyy-MM-dd hh:mm:ss');
+  for (let item of tags.values()) {
+    console.log(item)
+    Tag.find({
+      tag: item
+    }).then(res => {
+      if (!res) {
+        var tag = new Tag({
+          tag: item
+        })
+        tag.save()
+      }
+    }).catch(err => {
+      console.log('catched:', err);
+      resData = {
+        resCode: status.fail,
+        resMsg: "出错啦"
+      }
+    })
+  }
   var content = new Content({
     categoryId: contType,
     title: contTitle,
