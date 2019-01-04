@@ -1,9 +1,5 @@
 const User = require('../../models/User')
-const status = require('../statusCode')
-resData = {
-  resCode: status.success,
-  resMsg: ""
-}
+const status = require('../../tools/statusCode')
 module.exports = (req, res) => {
   var { userAccount, userName, pwd1, pwd2, isForgetPwd } = req.body;
   if (isForgetPwd) {

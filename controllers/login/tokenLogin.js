@@ -1,9 +1,8 @@
 const tools = require('../../tools')
-const status = require('../statusCode')
+const status = require('../../tools/statusCode')
 module.exports = async (req, res, next) => {
   const token = req.headers && req.headers['access-token']
   // console.log(token);
-  console.log(token);
   let $user = '';
   if (token) {
     try {

@@ -1,9 +1,5 @@
 const Content = require('../../models/Content')
-const status = require('../statusCode')
-resData = {
-  resCode: status.success,
-  resMsg: ""
-}
+const status = require('../../tools/statusCode')
 module.exports = (req, res, next) => {
   var { contId, contType, contTitle, contSummary, contBody } = req.query;
   Content.update({

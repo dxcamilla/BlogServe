@@ -1,10 +1,6 @@
 const Content = require('../../models/Content')
 const Tag = require('../../models/Tag')
-const status = require('../statusCode')
-resData = {
-  resCode: status.success,
-  resMsg: ""
-}
+const status = require('../../tools/statusCode')
 Date.prototype.Format = function (fmt) { //author: meizz
   let o = {
     "M+": this.getMonth() + 1, //月份
@@ -20,27 +16,39 @@ Date.prototype.Format = function (fmt) { //author: meizz
     if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
   return fmt
 }
-module.exports = (req, res) => {
+module.exports = async (req, res) => {
   let { contType, contTitle, contSummary, contBody, tags } = req.query,
     dateTime = (new Date()).Format('yyyy-MM-dd hh:mm:ss');
   for (let item of tags.values()) {
     console.log(item)
-    Tag.find({
+
+
+    const hasTag = await Tag.find({
       tag: item
-    }).then(res => {
-      if (!res) {
-        var tag = new Tag({
-          tag: item
-        })
-        tag.save()
-      }
-    }).catch(err => {
-      console.log('catched:', err);
-      resData = {
-        resCode: status.fail,
-        resMsg: "出错啦"
-      }
     })
+    if (!hasTag) {
+      var tag = new Tag({
+        tag: item
+      })
+      tag.save()
+    }
+
+    // Tag.find({
+    //   tag: item
+    // }).then(res => {
+    //   if (!res) {
+    //     var tag = new Tag({
+    //       tag: item
+    //     })
+    //     tag.save()
+    //   }
+    // }).catch(err => {
+    //   console.log('catched:', err);
+    //   resData = {
+    //     resCode: status.fail,
+    //     resMsg: "出错啦"
+    //   }
+    // })
   }
   var content = new Content({
     categoryId: contType,

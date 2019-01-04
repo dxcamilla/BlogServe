@@ -9,13 +9,11 @@ const bodyParser = require('body-parser');
 // const ejs = require('ejs');
 const art_express = require('express-art-template');
 const User = require('./models/User');
+const status = require('./tools/statusCode');
 const dbUrl = 'mongodb://localhost:27017/dxBlog';
 //引入跨域请求包
 const cors = require('cors')
 const app = express();
-global.corsUrl = 'http://localhost:8080'
-global.corsUrl1 = 'http://localhost:8081'
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 // app.engine('.html',ejs.__express);
@@ -43,34 +41,44 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/favicon.ico'));
-
-app.use((req, res, next) => {
-  req.cookies = new Cookies(req, res);
-  req.userInfo = {};
-  req.userToken = {};
-  if (req.cookies.get('userInfo')) {
-    try {
-      req.userInfo = JSON.parse(req.cookies.get('userInfo'));
-      User.findById(req.userInfo._id).then(userInfo => {
-        req.userInfo.isAdmin = Boolean(userInfo.isAdmin);
-        req.userInfo.superAdmin = Boolean(userInfo.superAdmin);
-      })
-    } catch (e) {
-      console.log(e);
-    }
-  }
-  if (req.cookies.get('userToken')) {
-    try {
-      req.userToken = JSON.parse(req.cookies.get('userToken'));
-    } catch (e) {
-      console.log(e);
-    }
-  }
-  next();
-})
 /*
-* 根据功能不同划分不同的模块
+* 连接数据库
 * */
+mongoose.connect(dbUrl, err => {
+  if (err) {
+    console.log("connect failed")
+  } else {
+    console.log("connect success");
+  }
+})
+// app.use((req, res, next) => {
+//   req.cookies = new Cookies(req, res);
+//   req.userInfo = {};
+//   req.userToken = {};
+//   if (req.cookies.get('userInfo')) {
+//     try {
+//       req.userInfo = JSON.parse(req.cookies.get('userInfo'));
+//       User.findById(req.userInfo._id).then(userInfo => {
+//         req.userInfo.isAdmin = Boolean(userInfo.isAdmin);
+//         req.userInfo.superAdmin = Boolean(userInfo.superAdmin);
+//       })
+//     } catch (e) {
+//       console.log(e);
+//     }
+//   }
+//   if (req.cookies.get('userToken')) {
+//     try {
+//       req.userToken = JSON.parse(req.cookies.get('userToken'));
+//     } catch (e) {
+//       console.log(e);
+//     }
+//   }
+//   next();
+// })
+/*
+* 根据功能不同划分不同的模块路由
+* */
+
 var index = require('./routes');
 var users = require('./routes/users');
 var admin = require('./routes/admin');
@@ -82,32 +90,27 @@ app.use('/admin', admin);
 //api测试
 var test = require('./routes/test');
 app.use('/test', test);
-
-/*
-* 连接数据库
-* */
-mongoose.connect(dbUrl, err => {
-  if (err) {
-    console.log("connect failed")
-  } else {
-    console.log("connect success");
-  }
-})
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
-  var err = new Error('Not Found');
+  const err = new Error("Not Font");
   err.status = 404;
-  res.render('error.art');
+  // throw Error(err);
+  err.message = err
   next(err);
 });
+
 // error handler最后一个中间件不需要next
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   // render the error page
   res.status(err.status || 500);
-  res.render('error.art');
+  resData = {
+    resCode: status.fail,
+    resMsg: err.message
+  }
+  res.json(resData)
 });
 
 app.listen(app.get('port'), function () {

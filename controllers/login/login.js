@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const jwtConf = require('../../config')
 const User = require('../../models/User')
-const status = require('../statusCode')
+const status = require('../../tools/statusCode')
 module.exports = (req, res) => {
   let { userAccount, pwd } = req.body;
   User.findOne({

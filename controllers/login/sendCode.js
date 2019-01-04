@@ -1,11 +1,7 @@
 const User = require('../../models/User')
 const Mailcode = require('../../models/Mailcode')
 const mailer = require('../../routes/mailer')
-const status = require('../statusCode')
-resData = {
-  resCode: status.success,
-  resMsg: ""
-}
+const status = require('../../tools/statusCode')
 module.exports = (req, res) => {
   let { userAccount, isForgetPwd } = req.body;
   User.findOne({

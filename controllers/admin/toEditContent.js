@@ -1,10 +1,6 @@
 const Category = require('../../models/Category')
 const Content = require('../../models/Content')
-const status = require('../statusCode')
-resData = {
-  resCode: status.success,
-  resMsg: ""
-}
+const status = require('../../tools/statusCode')
 module.exports = (req, res, next) => {
   var { contId } = req.query
   Category.find().then(cates => {

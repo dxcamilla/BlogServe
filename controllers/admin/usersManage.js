@@ -1,9 +1,5 @@
 const User = require('../../models/User')
-const status = require('../statusCode')
-resData = {
-  resCode: status.fail,
-  resMsg: ""
-}
+const status = require('../../tools/statusCode')
 module.exports = async (req, res, next) => {
   let page = Number(req.query.page || 1),//当前页数
     limit = 2,//每页展示条数

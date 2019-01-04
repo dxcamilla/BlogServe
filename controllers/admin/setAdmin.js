@@ -1,9 +1,5 @@
 const Content = require('../../models/Content')
-const status = require('../statusCode')
-resData = {
-  resCode: status.success,
-  resMsg: ""
-}
+const status = require('../../tools/statusCode')
 module.exports = (req, res) => {
   var contId = req.query.contId
   Content.findOne({ _id: contId })

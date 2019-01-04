@@ -5,14 +5,6 @@ const User = require('../models/User')
 const Category = require('../models/Category')
 const Content = require('../models/Content')
 const controllers = require('../controllers')
-var resData;
-router.use(function (req, res, next) {
-  resData = {
-    resCode: 1,
-    resMsg: ""
-  }
-  next();
-})
 // router.use(function(req, res, next) {
 //   if(!req.userInfo.isAdmin){
 //     res.send('对不起，只有管理员用户才可以进入后台页面');

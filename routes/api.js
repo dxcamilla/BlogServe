@@ -2,14 +2,6 @@ const express = require('express')
 const jwt = require('jsonwebtoken')
 const router = express.Router()
 const controllers = require('../controllers')
-let resData;
-router.use((req, res, next) => {
-    resData = {
-        resCode: 1,
-        resMsg: ""
-    }
-    next();
-});
 /*
 * 发送验证码
 */

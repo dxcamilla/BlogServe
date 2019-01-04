@@ -1,9 +1,5 @@
 const Category = require('../../models/Category')
-const status = require('../statusCode')
-resData = {
-  resCode: status.success,
-  resMsg: ""
-}
+const status = require('../../tools/statusCode')
 module.exports = async (req, res, next) => {
   Category.find().then(data => {
     resData = {
