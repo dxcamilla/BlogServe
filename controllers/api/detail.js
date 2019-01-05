@@ -1,30 +1,30 @@
-const User = require('../../models/User')
+const Content = require('../../models/Content')
 const status = require('../../tools/statusCode')
 module.exports = async (req, res, next) => {
   try {
-    var { userId } = req.query
-    const data = await User.Update({
-      _id: userId
-    }, {
-        isAdmin: 1,
-      });
+    const { contId } = req.query
+    const data = await Content.findOne({ _id: contId });
     resData = {
       resCode: status.success,
-      resMsg: "设置成功",
+      resMsg: "查询成功",
       content: data
     }
-    res.json(resData)
   } catch (err) {
-    next(err)
+    next(err);
   }
-  return res.json(resData)
-  // var contId = req.query.contId
+  return res.json(resData);
+  // var { contId } = req.query
   // Content.findOne({ _id: contId })
   //   .then(data => {
-  //     res.render('detail.art', {
-  //       userInfo: req.userInfo,
+  //     resData = {
+  //       resCode: status.success,
+  //       resMsg: "查询成功",
   //       content: data
-  //     })
+  //     }
+  //     // res.render('detail.art',{
+  //     //   userInfo: req.userInfo,
+  //     //   content: data
+  //     // })
   //   }).catch(function (err) {
   //     console.log('catched:', err);
   //     resData = {
@@ -32,5 +32,4 @@ module.exports = async (req, res, next) => {
   //       resMsg: "出了个bug~~"
   //     }
   //   })
-  // return res.json(resData)
 }

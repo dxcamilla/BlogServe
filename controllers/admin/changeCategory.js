@@ -1,17 +1,22 @@
 const Category = require('../../models/Category')
 const status = require('../../tools/statusCode')
 module.exports = async (req, res, next) => {
-  let { cateId, cateName } = req.query;
-  const data = await Category.update({
-    _id: cateId
-  }, {
-      category: cateName
-    });
-  category.save()
-  resData = {
-    resCode: status.success,
-    resMsg: "修改成功"
+  try {
+    let { cateId, cateName } = req.query;
+    const data = await Category.update({
+      _id: cateId
+    }, {
+        category: cateName
+      });
+    category.save()
+    resData = {
+      resCode: status.success,
+      resMsg: "修改成功"
+    }
+  } catch (err) {
+    next(err)
   }
+
 
   // Category.update({
   //   _id: cateId

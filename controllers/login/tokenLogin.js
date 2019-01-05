@@ -2,7 +2,7 @@ const tools = require('../../tools')
 const status = require('../../tools/statusCode')
 module.exports = async (req, res, next) => {
   const token = req.headers && req.headers['access-token']
-  // console.log(token);
+  console.log(token);
   let $user = '';
   if (token) {
     try {
@@ -15,11 +15,7 @@ module.exports = async (req, res, next) => {
       })
       // next()
     } catch (err) {
-      console.log(err)
-      res.json({
-        resCode: status.fail,
-        resMsg: err
-      })
+      next(err);
     }
   }
 }

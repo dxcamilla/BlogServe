@@ -11,11 +11,7 @@ module.exports = async (req, res, next) => {
       resMsg: "删除成功"
     }
   } catch (err) {
-    console.log('catched:', err);
-    resData = {
-      resCode: status.fail,
-      resMsg: "删除成功"
-    }
+    next(err)
   }
   return res.json(resData);
 

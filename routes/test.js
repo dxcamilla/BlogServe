@@ -89,5 +89,5 @@ router.get('/user/verUserInfo', function (req, res, next) {
 })
 // 分类查询
 // http://localhost:8081/test/category
-router.get('/category', controllers.category)
+router.get('/category', controllers.api.category)
 module.exports = router;

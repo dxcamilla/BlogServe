@@ -1,20 +1,24 @@
-const Category = require('../models/Category')
-const Content = require('../models/Content')
+const Category = require('../../models/Category')
+const Content = require('../../models/Content')
 // const tools = require('../tools')
 // const CODE = require('../tools/constant')
-const status = require('../tools/statusCode')
+const status = require('../../tools/statusCode')
 module.exports = async (req, res, next) => {
-  let datas = [];
-  let data = await Content.findOne({
-    stick: false
-  })
-  datas.push(data);
-  data = await Content.find().sort({ _id: -1 }).limit(1);
-  datas.push(data[0])
-  resData = {
-    resCode: status.success,
-    resMsg: "查询成功",
-    content: datas
+  try {
+    let datas = [];
+    let data = await Content.findOne({
+      stick: false
+    })
+    datas.push(data);
+    data = await Content.find().sort({ _id: -1 }).limit(1);
+    datas.push(data[0])
+    resData = {
+      resCode: status.success,
+      resMsg: "查询成功",
+      content: datas
+    }
+  } catch (err) {
+    next(err);
   }
   return res.json(resData)
 

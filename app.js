@@ -3,12 +3,12 @@ const path = require('path');
 const favicon = require('serve-favicon');
 const mongoose = require("mongoose");
 const logger = require('morgan');
-const cookieParser = require('cookie-parser');
-const Cookies = require('cookies');
+// const cookieParser = require('cookie-parser');
+// const Cookies = require('cookies');
 const bodyParser = require('body-parser');
 // const ejs = require('ejs');
 const art_express = require('express-art-template');
-const User = require('./models/User');
+// const User = require('./models/User');
 const status = require('./tools/statusCode');
 const dbUrl = 'mongodb://localhost:27017/dxBlog';
 //引入跨域请求包
@@ -38,7 +38,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // express内置函数，代替bodyParser处理post请求体
 // app.use(express.json())
 // app.use(express.urlencoded({ extended: true }))
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(favicon(__dirname + '/public/favicon.ico'));
 /*
@@ -80,16 +80,15 @@ mongoose.connect(dbUrl, err => {
 * */
 
 var index = require('./routes');
-var users = require('./routes/users');
 var admin = require('./routes/admin');
-var api = require('./routes/api');
-
-app.use('/', index);
-app.use('/api', api);
+var user = require('./routes/user');
+app.use('/api', index);
+app.use('/user', user);
 app.use('/admin', admin);
 //api测试
 var test = require('./routes/test');
 app.use('/test', test);
+
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
   const err = new Error("Not Font");

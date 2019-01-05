@@ -1,13 +1,17 @@
 const Category = require('../../models/Category')
 const status = require('../../tools/statusCode')
 module.exports = async (req, res, next) => {
-  var { cateIds } = req.query;
-  const data = await Category.deleteMany({
-    _id: cateIds
-  })
-  resData = {
-    resCode: status.success,
-    resMsg: "删除成功"
+  try {
+    var { cateIds } = req.query;
+    const data = await Category.deleteMany({
+      _id: cateIds
+    })
+    resData = {
+      resCode: status.success,
+      resMsg: "删除成功"
+    }
+  } catch (err) {
+    next(err);
   }
   return res.json(resData)
   // Category.deleteMany({
