@@ -2,7 +2,7 @@ const Category = require('../../models/Category')
 const status = require('../../tools/statusCode')
 module.exports = async (req, res, next) => {
   try {
-    var { cateName = '' } = req.query;
+    const { cateName = '' } = req.query;
     if (cateName === '' || cateName === null) {
       resData = {
         resCode: status.error,
@@ -10,15 +10,17 @@ module.exports = async (req, res, next) => {
       }
       return res.json(resData)
     }
-    const cates = await Category.findOne({
+    const cates = await Category.find({
       category: { '$regex': cateName, '$options': 'i' }
     })
-    if (cates) {
-      resData = {
-        resCode: status.exist,
-        resMsg: "该分类已存在"
+    for (let item of cates) {
+      if (item.category.toLowerCase() === cateName.toLowerCase()) {
+        resData = {
+          resCode: status.exist,
+          resMsg: "该分类已存在"
+        }
+        return res.json(resData)
       }
-      return res.json(resData)
     }
     const category = new Category({
       category: cateName
@@ -32,31 +34,4 @@ module.exports = async (req, res, next) => {
     next(err);
   }
   return res.json(resData)
-
-  // Category.findOne({
-  //   category: { '$regex': cateName, '$options': 'i' }
-  // }).then(function (cates) {
-  //   if (cates) {
-  //     resData = {
-  //       resCode: status.exist,
-  //       resMsg: "该分类已存在"
-  //     }
-  //     return res.json(resData)
-  //   }
-  //   var category = new Category({
-  //     category: cateName
-  //   })
-  //   resData = {
-  //     resCode: status.success,
-  //     resMsg: "添加成功"
-  //   }
-  //   category.save();
-  // }).catch(function (err) {
-  //   resData = {
-  //     resCode: status.fail,
-  //     resMsg: "保存失败"
-  //   }
-  //   console.log('catched:', err);
-  // })
-  // return res.json(resData)
 }

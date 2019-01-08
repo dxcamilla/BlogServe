@@ -16,6 +16,14 @@ module.exports = async (req, res, next) => {
         }
         return res.json(resData);
       }
+    } else {
+      if (!userStatus) {
+        resData = {
+          resCode: status.error,
+          resMsg: "该账号不存在"
+        }
+        return res.json(resData);
+      }
     }
     let validCode = parseInt((Math.random() * 9 + 1) * 100000),
       validTime = Date.now() + 1000 * 60 * 30 + 30;
@@ -32,7 +40,7 @@ module.exports = async (req, res, next) => {
       text: '您的验证码是:《 ' + validCode + ' 》，30分钟内有效，这是我们的秘密，我不会泄密哦，您也要保密哦'
     });
     mail.save();
-    console.log(newRgstInfo)
+    console.log(mail)
     resData = {
       resCode: status.success,
       resMsg: "验证码发送成功，请打开邮箱查收"

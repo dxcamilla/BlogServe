@@ -3,12 +3,23 @@ const status = require('../../tools/statusCode')
 module.exports = async (req, res, next) => {
   try {
     let { cateId, cateName } = req.query;
+    const cates = await Category.find({
+      category: { '$regex': cateName, '$options': 'i' }
+    });
+    for (let item of cates) {
+      if (item.category.toLowerCase() === cateName.toLowerCase()) {
+        resData = {
+          resCode: status.exist,
+          resMsg: "该分类已存在"
+        }
+        return res.json(resData)
+      }
+    }
     const data = await Category.update({
       _id: cateId
     }, {
         category: cateName
       });
-    category.save()
     resData = {
       resCode: status.success,
       resMsg: "修改成功"
@@ -16,24 +27,5 @@ module.exports = async (req, res, next) => {
   } catch (err) {
     next(err)
   }
-
-
-  // Category.update({
-  //   _id: cateId
-  // }, {
-  //     category: cateName
-  //   }).then(data => {
-  //     resData = {
-  //       resCode: status.success,
-  //       resMsg: "修改成功"
-  //     }
-  //     category.save()
-  //   }).catch(function (err) {
-  //     console.log('catched:', err);
-  //     resData = {
-  //       resCode: status.fail,
-  //       resMsg: "修改失败"
-  //     }
-  //   })
   return res.json(resData);
 }

@@ -49,35 +49,4 @@ module.exports = async (req, res, next) => {
     next(err);
   }
   return res.json(resData);
-
-  // Tag.find({
-  //   tag: item
-  // }).then(res => {
-  //   if (!res) {
-  //     var tag = new Tag({
-  //       tag: item
-  //     })
-  //     tag.save()
-  //   }
-  // }).catch(err => {
-  //   console.log('catched:', err);
-  //   resData = {
-  //     resCode: status.fail,
-  //     resMsg: "出错啦"
-  //   }
-  // })
-  // }
-  // var content = new Content({
-  //   categoryId: contType,
-  //   title: contTitle,
-  //   summary: contSummary,
-  //   content: contBody,
-  //   createTime: dateTime
-  // })
-  // resData = {
-  //   resCode: status.success,
-  //   resMsg: "添加成功"
-  // }
-  // content.save()
-  // return res.json(resData)
 }
