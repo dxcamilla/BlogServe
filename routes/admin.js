@@ -17,7 +17,15 @@ router.get("/", (req, res, next) => {
     userInfo: req.userInfo
   })
 })
+// 用户管理
 router.get('/usersManage', controllers.admin.usersManage)
+//删除用户
+router.get('/delUser', controllers.admin.delUser)
+//修改用户密码和邮箱
+router.get('/changeUserInfo', controllers.admin.changeUserInfo)
+//超级管理员设置普通管理员
+router.get('/setAdmin', controllers.admin.setAdmin)
+//标签管理
 router.get('/categoriesManage', controllers.admin.categoriesManage)
 // 增加分类名称
 router.get('/addCategory', controllers.admin.addCategory)
