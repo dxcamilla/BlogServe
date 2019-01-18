@@ -1,15 +1,14 @@
-const Category = require('../../models/Category')
 const Tag = require('../../models/Tag')
 const status = require('../../tools/statusCode')
 module.exports = async (req, res, next) => {
   try {
-    const cates = await Category.find();
-    const tags = await Tag.find();
+    var { tagIds } = req.query;
+    const data = await Tag.deleteMany({
+      _id: tagIds
+    })
     resData = {
       resCode: status.success,
-      resMsg: "获取成功",
-      categories: cates,
-      tags: tags
+      resMsg: "删除成功"
     }
   } catch (err) {
     next(err);
