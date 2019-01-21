@@ -18,18 +18,20 @@ Date.prototype.Format = function (fmt) { //author: meizz
 }
 module.exports = async (req, res, next) => {
   try {
-    let { contType, contTitle, contSummary, contBody, tags, stick } = req.query,
+    let { contType, contTitle, contSummary, contBody, tags = [], stick } = req.query,
       dateTime = (new Date()).Format('yyyy-MM-dd hh:mm:ss');
-    for (let item of tags.values()) {
-      console.log(item)
-      const hasTag = await Tag.findOne({
-        tag: { '$regex': item, '$options': 'i' }
-      })
-      if (hasTag.toLowerCase() !== item.toLowerCase()) {
-        var tag = new Tag({
-          tag: item
+    if (tags.length !== 0) {
+      for (let item of tags) {
+        console.log(item)
+        const hasTag = await Tag.findOne({
+          tag: { '$regex': item, '$options': 'i' }
         })
-        tag.save()
+        if (!hasTag || hasTag.tag.toLowerCase() !== item.toLowerCase()) {
+          var tag = new Tag({
+            tag: item
+          })
+          tag.save()
+        }
       }
     }
     var content = new Content({
@@ -38,14 +40,15 @@ module.exports = async (req, res, next) => {
       summary: contSummary,
       content: contBody,
       createTime: dateTime,
+      tags: tags,
       stick: stick
     })
+    const add = await content.save();
+    console.log(add);
     resData = {
       resCode: status.success,
       resMsg: "添加成功"
     }
-    content.save();
-    return res.json(resData)
   } catch (err) {
     next(err);
   }

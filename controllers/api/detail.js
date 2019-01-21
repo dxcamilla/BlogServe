@@ -3,7 +3,8 @@ const status = require('../../tools/statusCode')
 module.exports = async (req, res, next) => {
   try {
     const { contId } = req.query
-    const data = await Content.findOne({ _id: contId });
+    const data = await Content.findOne({ _id: contId })
+      .populate({ path: 'categoryId', select: { category: 1 } });
     resData = {
       resCode: status.success,
       resMsg: "查询成功",
@@ -13,23 +14,4 @@ module.exports = async (req, res, next) => {
     next(err);
   }
   return res.json(resData);
-  // var { contId } = req.query
-  // Content.findOne({ _id: contId })
-  //   .then(data => {
-  //     resData = {
-  //       resCode: status.success,
-  //       resMsg: "查询成功",
-  //       content: data
-  //     }
-  //     // res.render('detail.art',{
-  //     //   userInfo: req.userInfo,
-  //     //   content: data
-  //     // })
-  //   }).catch(function (err) {
-  //     console.log('catched:', err);
-  //     resData = {
-  //       resCode: status.fail,
-  //       resMsg: "出了个bug~~"
-  //     }
-  //   })
 }

@@ -13,6 +13,7 @@ module.exports = async (req, res, next) => {
     const tags = await Tag.find({
       tag: { '$regex': tagName, '$options': 'i' }
     })
+
     for (let item of tags) {
       if (item.tag.toLowerCase() === tagName.toLowerCase()) {
         resData = {

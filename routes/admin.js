@@ -55,11 +55,14 @@ router.get('/delTag', controllers.admin.delTag)
  *  */
 // 内容管理页面
 router.get('/contentsManage', controllers.admin.contentsManage)
-// 跳转至新增、修改内容
-router.get('/toAddContent', controllers.admin.toAddContent)
-//添加内容
-// router.get('/addContent', controllers.admin.addContent)
+// 删除内容
 router.get('/delContent', controllers.admin.delContent)
+// router.get('/toAddContent', controllers.admin.toAddContent)
+// 跳转至新增、修改内容
 router.get('/editableContent', controllers.admin.editableContent)
+//添加内容
+router.get('/addContent', controllers.admin.addContent)
+// 更新内容
+router.get('/changeContent', controllers.admin.changeContent)
 router.get('/saveContent', controllers.admin.saveContent)
 module.exports = router;
