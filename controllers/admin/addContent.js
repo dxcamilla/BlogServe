@@ -1,24 +1,10 @@
 const Content = require('../../models/Content')
 const Tag = require('../../models/Tag')
 const status = require('../../tools/statusCode')
-Date.prototype.Format = function (fmt) { //author: meizz
-  let o = {
-    "M+": this.getMonth() + 1, //月份
-    "d+": this.getDate(), //日
-    "h+": this.getHours(), //小时
-    "m+": this.getMinutes(), //分
-    "s+": this.getSeconds(), //秒
-    "q+": Math.floor((this.getMonth() + 3) / 3), //季度
-    "S": this.getMilliseconds() //毫秒
-  };
-  if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-  for (let k in o)
-    if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-  return fmt
-}
+const format = require('../../tools/dateFormat')
 module.exports = async (req, res, next) => {
   try {
-    let { contType, contTitle, contSummary, contBody, tags = [], stick } = req.query,
+    let { contType, contTitle, contSummary, contBody, tags = [], stick, creator, pulishStatus = 0 } = req.query,
       dateTime = (new Date()).Format('yyyy-MM-dd hh:mm:ss');
     if (tags.length !== 0) {
       for (let item of tags) {
@@ -34,14 +20,23 @@ module.exports = async (req, res, next) => {
         }
       }
     }
+    let pubTime = '';
+    if (pulishStatus === 1) {
+      pubTime = dateTime
+    }
     var content = new Content({
       categoryId: contType,
       title: contTitle,
       summary: contSummary,
       content: contBody,
+      creator: creator,
+      updater: creator,
       createTime: dateTime,
+      updateTime: dateTime,
+      publishTime: pubTime,
       tags: tags,
-      stick: stick
+      stick: stick,
+      status: pulishStatus
     })
     const add = await content.save();
     console.log(add);

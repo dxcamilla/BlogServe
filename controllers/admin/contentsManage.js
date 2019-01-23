@@ -3,7 +3,7 @@ const status = require('../../tools/statusCode')
 module.exports = async (req, res, next) => {
   try {
     let page = Number(req.query.page || 1),
-      limit = 2,
+      limit = 10,
       skip = (page - 1) * limit;
     const count = await Content.find().countDocuments();
     let pages = Math.ceil(count / limit);
