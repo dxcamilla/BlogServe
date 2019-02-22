@@ -4,7 +4,7 @@ const status = require('../../tools/statusCode')
 const format = require('../../tools/dateFormat')
 module.exports = async (req, res, next) => {
   try {
-    let { contType, contTitle, contSummary, contBody, tags = [], stick, creator, pulishStatus = 0 } = req.query,
+    let { contType, contTitle, contSummary, contBody, tags = [], stick, creator, pulishStatus } = req.query,
       dateTime = (new Date()).Format('yyyy-MM-dd hh:mm:ss');
     if (tags.length !== 0) {
       for (let item of tags) {
@@ -21,7 +21,7 @@ module.exports = async (req, res, next) => {
       }
     }
     let pubTime = '';
-    if (pulishStatus === 1) {
+    if (Number(pulishStatus) === 1) {
       pubTime = dateTime
     }
     var content = new Content({

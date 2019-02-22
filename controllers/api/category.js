@@ -5,57 +5,22 @@ module.exports = async (req, res, next) => {
   try {
     const { cateId = '' } = req.query;
     const cates = await Category.find();
+    let data = ""
     if (!cateId) {
-      const data = await Content.find();
-      resData = {
-        resCode: status.success,
-        resMsg: "查询成功",
-        data: data
-      }
+      data = await Content.find().sort({ _id: -1 });
     } else {
-      const data = await Content.find({
+      data = await Content.find({
         categoryId: cateId
-      });
-      resData = {
-        resCode: status.success,
-        resMsg: "查询成功",
-        data: data
-      }
+      }).sort({ _id: -1 });
+    }
+    resData = {
+      resCode: status.success,
+      resMsg: "查询成功",
+      categories: cates,
+      data: data
     }
   } catch (err) {
     next(err);
   }
   return res.json(resData)
-
-
-  // var { cateId = '' } = req.query;
-  // console.log("cateId", cateId)
-  // Category.find().then(cates => {
-  //   if (!cateId) {
-  //     Content.find().then(data => {
-  //       resData = {
-  //         resCode: 1,
-  //         resMsg: "查询成功",
-  //         data: data
-  //       }
-  //     })
-  //   } else {
-  //     Content.find({
-  //       categoryId: cateId
-  //     }).then(data => {
-  //       resData = {
-  //         resCode: 1,
-  //         resMsg: "查询成功",
-  //         data: data
-  //       }
-  //     })
-  //   }
-  // }).catch(function (err) {
-  //   console.log('catched:', err);
-  //   resData = {
-  //     resCode: status.fail,
-  //     resMsg: "出了个bug~~"
-  //   }
-  // })
-  // return res.json(resData)
 }
