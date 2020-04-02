@@ -1,10 +1,20 @@
 var mongoose = require('mongoose');
 module.exports = new mongoose.Schema({
+    _id: {
+        type: Number,
+        default: 100000
+    },
     categoryId: {
         //类型,关联category
         type: mongoose.Schema.Types.ObjectId,
         // 引用
         ref: 'Category'
+    },
+    comment: {
+        //类型,关联category
+        type: Number,
+        // 引用
+        ref: 'Comment'
     },
     tags: {
         type: Array,
